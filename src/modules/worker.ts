@@ -3,7 +3,7 @@ import * as HTTPS from 'https';
 
 import { Socket } from './socket/socket';
 import { WSServer } from './socket/wsserver';
-import { Options, Mode, Middleware, Listener } from '../utils/types';
+import { CustomObject, Options, Mode, Middleware, Listener } from '../utils/types';
 
 import { WebSocketEngine, WebSocketServerType, WebSocketType, ConnectionInfoType } from './engine';
 
@@ -25,9 +25,9 @@ export class Worker {
       }
     });
 
-    uServer.on('connection', (socket: WebSocketType) => {
+    uServer.on('connection', (socket: WebSocketType, upgradeReq: CustomObject) => {
       this.options.logger.debug(`New WebSocket client is connected`, `(pid: ${process.pid})`);
-      this.wss.emit('connection', new Socket(this, socket));
+      this.wss.emit('connection', new Socket(this, socket), upgradeReq);
     });
 
     if (this.options.websocketOptions.autoPing) {

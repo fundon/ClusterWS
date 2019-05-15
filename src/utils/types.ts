@@ -7,6 +7,10 @@ export type Message = any;
 export type Listener = (...args: any[]) => void;
 export type WorkerFunction = (this: Worker) => void;
 
+export type CustomObject = {
+  [propName: string]: any;
+};
+
 export enum Mode {
   Scale,
   Single
